@@ -25,6 +25,13 @@ function RegisterPage() {
                     }))
                 }
             }
+
+            if (response.status == 500) {
+                Swal.fire({
+                    title: "Algo ha pasado, intenta nuevamente o en otro momento",
+                    icon: "error"
+                })
+            }
         }
     }
 
