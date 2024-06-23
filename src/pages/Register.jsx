@@ -2,16 +2,61 @@ import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { registerRequest } from "../api/auth"
 import Swal from "sweetalert2"
-import { useNavigate } from "react-router-dom"
+import FormInput from "../components/FormInput/Component"
+import { useNavigate, Link } from "react-router-dom"
 
 function RegisterPage() {
     const { register, handleSubmit, formState: { errors } } = useForm()
     const [registerErrors, setRegisterErrors] = useState({})
     const navigate = useNavigate()
+    const fields = [
+        {
+            type: 'text',
+            placeholder: 'Ingresa tu nombre completo',
+            label: 'Nombre completo',
+            hasError: registerErrors.full_name,
+            requiredError: 'El nombre es requerido',
+            requirements: register('full_name', { required: true })
+        },
+        {
+            type: "email",
+            placeholder: "Ingrese su correo",
+            label: "Correo",
+            hasError: registerErrors.email,
+            requiredError: "El correo es requerido",
+            requirements: register('email', { required: true })
+        },
+        {
+            type: "text",
+            placeholder: "Ingrese su número de teléfono",
+            label: "Teléfono",
+            hasError: registerErrors.phone,
+            requiredError: "El teléfono es requerido",
+            requirements: register('phone', { required: true }),
+        },
+        {
+            type: "password",
+            placeholder: "*******",
+            label: "Contraseña",
+            hasError: registerErrors.password,
+            requiredError: "La contraseña es requerida",
+            requirements: register('password', { required: true }),
+        }
+    ]
 
     const registerFn = async (formData) => {
         try {
+            Swal.fire({
+                title: 'Cargando...',
+                text: 'Por favor espera mientras se valida la información',
+                showConfirmButton: false,
+                allowOutsideClick: false,
+                icon: 'success'
+            })
+
             await registerRequest(formData)
+
+            Swal.close()
 
             navigate('/login')
         } catch ({ response }) {
@@ -26,7 +71,7 @@ function RegisterPage() {
                 }
             }
 
-            if (response.status == 500) {
+            if (response.status == 500 || !response) {
                 Swal.fire({
                     title: "Algo ha pasado, intenta nuevamente o en otro momento",
                     icon: "error"
@@ -51,82 +96,29 @@ function RegisterPage() {
     }, [registerErrors])
 
     return (
-        <div>
-            <form onSubmit={handleSubmit(registerFn)}>
-                <input type="text" placeholder="Nombre completo" {
-                    ...register('full_name',
-                        { required: true })} />
-                {registerErrors.full_name && (
-                    <p>
-                        {
-                            registerErrors.full_name.type === 'required' ?
-                                (
-                                    'El nombre es requerido'
-                                ) :
-                                (
-                                    registerErrors.full_name.message
-                                )
-                        }
-                    </p>
-                )}
+        <div className="dark:bg-[#1a1b1e] bg-white min-h-screen flex items-center justify-center">
+            <div className="bg-[#2b2c30] dark:bg-[#1a1b1e] rounded-lg shadow-lg p-8 w-full max-w-md">
+                <h2 className="text-2xl font-bold text-white mb-6">Registro</h2>
+                <form className="space-y-4" onSubmit={handleSubmit(registerFn)}>
 
-                <input type="email" placeholder="Correo electrónico" {
-                    ...register('email', {
-                        required: true,
-                    })} />
-                {registerErrors.email && (
-                    <p>
-                        {
-                            registerErrors.email.type === 'required' ?
-                                (
-                                    'la contraseña es requerida'
-                                ) :
-                                (
-                                    registerErrors.email.message
-                                )
-                        }
-                    </p>
-                )}
+                    {fields.map((field, i) => (
+                        <FormInput
+                            type={field.type}
+                            placeholder={field.placeholder}
+                            label={field.label}
+                            hasError={field.hasError}
+                            requiredError={field.requiredError}
+                            requirements={field.requirements}
+                            key={i}
+                        />
+                    ))}
 
-                <input type="text" placeholder="Número de celular"
-                    {...register('phone', {
-                        required: true,
-                    })} />
-                {registerErrors.phone && (
-                    <p>
-                        {
-                            registerErrors.phone.type === 'required' ?
-                                (
-                                    'El número de celular es requerido'
-                                ) :
-                                (
-                                    registerErrors.phone.message
-                                )
-                        }
-                    </p>
-                )}
-
-
-                <input type="password" autoComplete="false" {...register('password', {
-                    required: true,
-                    min: 6
-                })} />
-                {registerErrors.password && (
-                    <p>
-                        {
-                            registerErrors.password.type === 'required' ?
-                                (
-                                    'La contraseña es requerida'
-                                ) :
-                                (
-                                    registerErrors.password.message
-                                )
-                        }
-                    </p>
-                )}
-
-                <button type="submit">Registrarse</button>
-            </form>
+                    <button className="bg-[#6366f1] hover:bg-[#4f46e5] text-white font-medium rounded-md px-4 py-2 w-full focus:outline-none focus:ring-2 focus:ring-[#6366f1]" type="submit">Registrarse</button>
+                </form>
+                <div className="mt-4 text-white text-center">
+                    ¿Ya tienes cuenta? <Link className="text-[#6366f1]" to="/login">Iniciar sesion</Link>
+                </div>
+            </div>
         </div>
     )
 }
