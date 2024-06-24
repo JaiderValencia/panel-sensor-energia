@@ -32,7 +32,7 @@ Component.propTypes = {
     requiredError: PropTypes.string,
     type: PropTypes.string.isRequired,
     requirements: PropTypes.any.isRequired,
-    label: PropTypes.string,
+    label: PropTypes.string.isRequired,
 }
 
 export default Component
