@@ -1,11 +1,11 @@
 import { useAuth } from '../../context/Auth/createProvider'
 import { Navigate, Outlet } from 'react-router-dom'
-
+import SpinLoader from '../spinLoader/Component'
 
 function PublicRoute() {
     const { isLogin, loading } = useAuth()
 
-    if (loading) return <h1>Cargando...</h1>
+    if (loading) return <SpinLoader></SpinLoader>
 
     if (!loading && isLogin) return <Navigate replace to='/' />
 
