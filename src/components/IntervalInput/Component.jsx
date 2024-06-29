@@ -6,7 +6,7 @@ import "flatpickr/dist/themes/dark.css"
 import moment from 'moment'
 import Swal from 'sweetalert2'
 
-function IntervalInput({ inputName, inputType, inputPlaceholder, styles, setGraphicData }) {
+function IntervalInput({ inputName, inputType, inputPlaceholder, styles, setLoading, setGraphicData }) {
     const [inputValue, setInputValue] = useState([])
 
     const handleOnChange = (value) => (
@@ -29,6 +29,9 @@ function IntervalInput({ inputName, inputType, inputPlaceholder, styles, setGrap
                     icon: 'error'
                 })
             }
+
+            setLoading(true)
+            setGraphicData([])
 
             const { data } = await intervalGraphicRequest({
                 initialDate: moment(rawInitialDate).format('Y-M-D'),
@@ -59,6 +62,7 @@ function IntervalInput({ inputName, inputType, inputPlaceholder, styles, setGrap
                 })
             }
         }
+        setLoading(false)
     }
 
     return (
@@ -88,6 +92,7 @@ IntervalInput.propTypes = {
     inputPlaceholder: PropTypes.string.isRequired,
     inputName: PropTypes.string.isRequired,
     setGraphicData: PropTypes.func,
+    setLoading: PropTypes.func,
     styles: PropTypes.object
 }
 

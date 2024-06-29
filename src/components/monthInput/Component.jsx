@@ -3,7 +3,7 @@ import { monthGraphicRequest } from '../../api/graphics'
 import PropTypes from 'prop-types'
 import { useState } from 'react'
 
-function MonthInput({ inputType, inputPlaceholder, inputName, setGraphicData, styles }) {
+function MonthInput({ inputType, inputPlaceholder, inputName, setGraphicData, setLoading, styles }) {
     const [inputValue, setInputValue] = useState("")
 
 
@@ -26,6 +26,8 @@ function MonthInput({ inputType, inputPlaceholder, inputName, setGraphicData, st
         const [year, month] = inputValue.split('-')
 
         try {
+            setLoading(true)
+            setGraphicData([])
             const response = await monthGraphicRequest({ year, month })
 
             if (!response) {
@@ -52,6 +54,7 @@ function MonthInput({ inputType, inputPlaceholder, inputName, setGraphicData, st
                 })
             }
         }
+        setLoading(false)
     }
 
     return (
@@ -67,6 +70,7 @@ MonthInput.propTypes = {
     inputPlaceholder: PropTypes.string.isRequired,
     inputName: PropTypes.string.isRequired,
     setGraphicData: PropTypes.func,
+    setLoading: PropTypes.func,
     styles: PropTypes.object
 }
 
