@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { Context } from './context/Auth/Context'
+import HomePage from './pages/Home'
 import RegisterPage from './pages/Register'
 import LoginPage from './pages/Login'
 import PrivateRoute from './components/protectedRoutes/PrivateRoute'
@@ -11,7 +12,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route element={<PrivateRoute />}>
-            <Route path='/' element={<h1>home Page</h1>} />
+            <Route path='/' element={<HomePage />} />
           </Route>
 
           <Route element={<PublicRoute />}>
