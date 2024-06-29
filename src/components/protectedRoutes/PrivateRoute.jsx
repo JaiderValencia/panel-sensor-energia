@@ -5,7 +5,7 @@ import SpinLoader from '../spinLoader/Component'
 function PrivateRoute() {
     const { isLogin, loading } = useAuth()
 
-    if (loading) return <SpinLoader></SpinLoader>
+    if (loading) return <SpinLoader fullscreen={true}></SpinLoader>
 
     if (!loading && !isLogin) return <Navigate to='/login' replace />
 
