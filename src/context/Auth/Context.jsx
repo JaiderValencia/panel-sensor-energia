@@ -6,10 +6,7 @@ import Cookies from 'js-cookie'
 
 export function Context({ children }) {
     const [isLogin, setIsLogin] = useState(false)
-    const [userData, setUserData] = useState({
-        full_name: '',
-        email: ''
-    })
+    const [userData, setUserData] = useState({})
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {

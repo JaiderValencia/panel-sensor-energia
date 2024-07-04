@@ -1,4 +1,5 @@
 import SectionCard from "../components/SectionCard/Component"
+import Navbar from '../components/Navbar/Component'
 
 function HomePage() {
     const sections = [
@@ -18,6 +19,7 @@ function HomePage() {
 
     return (
         <>
+            <Navbar />
             {sections.map((actualSection, index) => (
                 <SectionCard
                     key={index}
