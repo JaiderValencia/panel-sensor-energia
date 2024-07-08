@@ -5,9 +5,18 @@ import Swal from "sweetalert2"
 import FormInput from "../components/FormInput/Component"
 import { useNavigate, Link } from "react-router-dom"
 import { useEffect, useState } from "react"
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+
+const validationSchema = yup.object({
+    email: yup.string().email('Debes poner un correo válido').required('El correo es requerido'),
+    password: yup.string().required('La contraseña es requerida')
+})
 
 function LoginPage() {
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: yupResolver(validationSchema)
+    })
     const { setIsLogin, setUserData } = useAuth()
     const navigate = useNavigate()
     const [errorsState, setErrorsState] = useState(null)
@@ -16,7 +25,6 @@ function LoginPage() {
             type: "email",
             placeholder: "Ingrese su correo",
             label: "Correo",
-            requiredError: "El correo es requerido",
             hasError: errorsState?.email,
             requirements: register('email', { required: true })
         },
@@ -24,7 +32,6 @@ function LoginPage() {
             type: "password",
             placeholder: "*******",
             label: "Contraseña",
-            requiredError: "La contraseña es requerida",
             hasError: errorsState?.password,
             requirements: register('password', { required: true }),
         }
@@ -87,9 +94,8 @@ function LoginPage() {
                             type={field.type}
                             placeholder={field.placeholder}
                             label={field.label}
-                            requiredError={field.requiredError}
-                            requirements={field.requirements}
                             hasError={field.hasError}
+                            requirements={field.requirements}
                             key={i}
                         />
                     ))}

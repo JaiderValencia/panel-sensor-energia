@@ -4,9 +4,20 @@ import { registerRequest } from "../api/auth"
 import Swal from "sweetalert2"
 import FormInput from "../components/FormInput/Component"
 import { useNavigate, Link } from "react-router-dom"
+import * as yup from 'yup'
+import { yupResolver } from '@hookform/resolvers/yup'
+
+const validationSchema = yup.object({
+    full_name: yup.string().required('El nombre completo es requerido'),
+    email: yup.string().required('El correo es requerido').email('Debes poner un correo válido'),
+    phone: yup.string().required('El número de teléfono es requerido').matches(/^\d+$/, { message: 'Debes poner un número valido' }),
+    password: yup.string().required('La contraseña es requerida').min(8, 'Debes poner mínimo 8 caracteres')
+})
 
 function RegisterPage() {
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { register, handleSubmit, formState: { errors } } = useForm({
+        resolver: yupResolver(validationSchema)
+    })
     const [registerErrors, setRegisterErrors] = useState({})
     const navigate = useNavigate()
     const fields = [
@@ -14,32 +25,28 @@ function RegisterPage() {
             type: 'text',
             placeholder: 'Ingresa tu nombre completo',
             label: 'Nombre completo',
-            hasError: registerErrors.full_name,
-            requiredError: 'El nombre es requerido',
+            hasError: registerErrors.full_name,            
             requirements: register('full_name', { required: true })
         },
         {
             type: "email",
             placeholder: "Ingrese su correo",
             label: "Correo",
-            hasError: registerErrors.email,
-            requiredError: "El correo es requerido",
+            hasError: registerErrors.email,            
             requirements: register('email', { required: true })
         },
         {
             type: "text",
             placeholder: "Ingrese su número de teléfono",
             label: "Teléfono",
-            hasError: registerErrors.phone,
-            requiredError: "El teléfono es requerido",
+            hasError: registerErrors.phone,            
             requirements: register('phone', { required: true }),
         },
         {
             type: "password",
             placeholder: "*******",
             label: "Contraseña",
-            hasError: registerErrors.password,
-            requiredError: "La contraseña es requerida",
+            hasError: registerErrors.password,            
             requirements: register('password', { required: true }),
         }
     ]
@@ -86,15 +93,6 @@ function RegisterPage() {
         }
     }, [errors])
 
-    useEffect(() => {
-        if (Object.keys(registerErrors).length) {
-            Swal.fire({
-                title: "Tienes errores por solucionar",
-                icon: "error"
-            })
-        }
-    }, [registerErrors])
-
     return (
         <div className="dark:bg-[#1a1b1e] bg-white min-h-screen flex items-center justify-center">
             <div className="bg-[#2b2c30] dark:bg-[#1a1b1e] rounded-lg shadow-lg p-8 w-full max-w-md">
@@ -106,8 +104,7 @@ function RegisterPage() {
                             type={field.type}
                             placeholder={field.placeholder}
                             label={field.label}
-                            hasError={field.hasError}
-                            requiredError={field.requiredError}
+                            hasError={field.hasError}                            
                             requirements={field.requirements}
                             key={i}
                         />
