@@ -37,7 +37,7 @@ function LoginPage() {
         }
     ]
 
-    const registerFn = async (formData) => {
+    const loginFn = async (formData) => {
         try {
             Swal.fire({
                 title: 'Cargando...',
@@ -87,7 +87,7 @@ function LoginPage() {
         <div className="dark:bg-[#1a1b1e] bg-white min-h-screen flex items-center justify-center">
             <div className="bg-[#2b2c30] dark:bg-[#1a1b1e] rounded-lg shadow-lg p-8 w-full max-w-md">
                 <h2 className="text-2xl font-bold text-white mb-6">Iniciar sesion</h2>
-                <form className="space-y-4" onSubmit={handleSubmit(registerFn)}>
+                <form className="space-y-4" onSubmit={handleSubmit(loginFn)}>
 
                     {fields.map((field, i) => (
                         <FormInput
