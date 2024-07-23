@@ -1,11 +1,14 @@
+import SpinLoader from '../spinLoader/Component'
+import Chart from '../Chart/Component'
 import Swal from 'sweetalert2'
 import { monthGraphicRequest } from '../../api/graphics'
 import PropTypes from 'prop-types'
 import { useState } from 'react'
 
-function MonthInput({ inputType, inputPlaceholder, inputName, setGraphicData, setLoading, styles }) {
+function MonthInput({ inputType, inputPlaceholder, inputName, styles }) {
+    const [graphicData, setGraphicData] = useState([])
+    const [loading, setLoading] = useState(false)
     const [inputValue, setInputValue] = useState("")
-
 
     const handleOnChange = (e) => setInputValue(e.target.value)
 
@@ -53,14 +56,23 @@ function MonthInput({ inputType, inputPlaceholder, inputName, setGraphicData, se
                     icon: "error"
                 })
             }
+        } finally {
+            setLoading(false)
         }
-        setLoading(false)
     }
 
     return (
         <>
             <input min="2024-01" className={styles.input} onChange={handleOnChange} type={inputType} placeholder={inputPlaceholder} name={inputName} />
             <button onClick={handleConsult} type='submit' className={styles.formBtn}>consultar</button>
+            {loading && (
+                <SpinLoader fullscreen={false} />
+            )}
+            {graphicData.length > 0 ? (
+                <Chart data={graphicData} />
+            ) : (
+                null
+            )}
         </>
     )
 }
@@ -69,8 +81,6 @@ MonthInput.propTypes = {
     inputType: PropTypes.string.isRequired,
     inputPlaceholder: PropTypes.string.isRequired,
     inputName: PropTypes.string.isRequired,
-    setGraphicData: PropTypes.func,
-    setLoading: PropTypes.func,
     styles: PropTypes.object
 }
 

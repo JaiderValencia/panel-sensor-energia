@@ -25,14 +25,9 @@
 }
 
 .content {
-    flex-direction: column;
-    gap: 20px;
-}
-
-.form,
-.content {
     display: flex;
     flex-direction: column;
+    gap: 20px;
 }
 
 .input {

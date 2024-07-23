@@ -5,8 +5,12 @@ import { intervalGraphicRequest } from '../../api/graphics'
 import "flatpickr/dist/themes/dark.css"
 import moment from 'moment'
 import Swal from 'sweetalert2'
+import SpinLoader from '../spinLoader/Component'
+import Chart from '../Chart/Component'
 
-function IntervalInput({ inputName, inputType, inputPlaceholder, styles, setLoading, setGraphicData }) {
+function IntervalInput({ inputName, inputType, inputPlaceholder, styles }) {
+    const [graphicData, setGraphicData] = useState([])
+    const [loading, setLoading] = useState(false)
     const [inputValue, setInputValue] = useState([])
 
     const handleOnChange = (value) => (
@@ -61,8 +65,9 @@ function IntervalInput({ inputName, inputType, inputPlaceholder, styles, setLoad
                     icon: "error"
                 })
             }
+        } finally {
+            setLoading(false)
         }
-        setLoading(false)
     }
 
     return (
@@ -83,6 +88,14 @@ function IntervalInput({ inputName, inputType, inputPlaceholder, styles, setLoad
                 }}
             />
             <button onClick={handleConsult} type='submit' className={styles.formBtn}>consultar</button>
+            {loading && (
+                <SpinLoader fullscreen={false} />
+            )}
+            {graphicData.length > 0 ? (
+                <Chart data={graphicData} />
+            ) : (
+                null
+            )}
         </>
     )
 }
@@ -91,8 +104,6 @@ IntervalInput.propTypes = {
     inputType: PropTypes.string.isRequired,
     inputPlaceholder: PropTypes.string.isRequired,
     inputName: PropTypes.string.isRequired,
-    setGraphicData: PropTypes.func,
-    setLoading: PropTypes.func,
     styles: PropTypes.object
 }
 
