@@ -1,5 +1,5 @@
-import { createChart, ColorType } from 'lightweight-charts';
-import { useEffect, useRef } from 'react';
+import { createChart, ColorType } from 'lightweight-charts'
+import { useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 
 function Chart({ data }) {
@@ -9,16 +9,15 @@ function Chart({ data }) {
     const areaTopColor = '#2962FF'
     const areaBottomColor = 'rgba(41, 98, 255, 0.28)'
 
-    const chartContainerRef = useRef();
+    const chartContainerRef = useRef()
 
     useEffect(
         () => {
             const handleResize = () => {
                 chart.applyOptions({
                     width: chartContainerRef.current.clientWidth,
-                });
-
-            };
+                })
+            }
 
             const chart = createChart(chartContainerRef.current, {
                 layout: {
@@ -27,28 +26,28 @@ function Chart({ data }) {
                 },
                 width: chartContainerRef.current.clientWidth,
                 height: 300,
-            });
-            chart.timeScale().fitContent();
+            })
+            chart.timeScale().fitContent()
 
-            const newSeries = chart.addLineSeries({ lineColor, topColor: areaTopColor, bottomColor: areaBottomColor });
-            newSeries.setData(data);
+            const newSeries = chart.addLineSeries({ lineColor, topColor: areaTopColor, bottomColor: areaBottomColor })
+            newSeries.setData(data)
 
-            window.addEventListener('resize', handleResize);
+            window.addEventListener('resize', handleResize)
 
             return () => {
-                window.removeEventListener('resize', handleResize);
+                window.removeEventListener('resize', handleResize)
 
-                chart.remove();
-            };
+                chart.remove()
+            }
         },
         [data, backgroundColor, lineColor, textColor, areaTopColor, areaBottomColor]
-    );
+    )
 
     return (
         <div
             ref={chartContainerRef}
         />
-    );
+    )
 }
 
 Chart.propTypes = {
