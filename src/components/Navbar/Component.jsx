@@ -11,7 +11,7 @@ function Navbar() {
     }
 
     return (
-        <nav className="bg-[#333] h-16 fixed top-0 w-full flex justify-between items-center">
+        <nav className="bg-[#333] h-16 fixed top-0 w-full flex justify-between items-center z-[1]">
             <div href="https://teamroboticsdelpacifico.com" className="ml-4">
                 <h4 className="text-white font-bold">Hola {userData.full_name}</h4>
             </div>

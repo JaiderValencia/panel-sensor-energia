@@ -1,0 +1,157 @@
+/* colors */
+.green {
+    background: #02be3d;
+}
+
+.green::before,
+.green::after,
+.green>.icon {
+    background: #018A2C;
+}
+
+.green>.type_container>.type {
+    color: rgb(161, 249, 144);
+}
+
+.yellow {
+    background: #ffe522;
+}
+
+.yellow::before,
+.yellow::after,
+.yellow>.icon {
+    background: #d6c015;
+}
+
+.yellow>.type_container>.type {
+    color: rgb(0, 187, 0);
+}
+
+.blue {
+    background: #2a76fa;
+}
+
+.blue::before,
+.blue::after,
+.blue>.icon {
+    background: #0645B0;
+}
+
+.blue>.type_container>.type {
+    color: rgb(144, 202, 249);
+}
+
+/* end colors */
+
+.widget {
+    color: white;
+    overflow: hidden;
+    position: relative;
+    padding: 20px 20px;
+    border-radius: 24px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: all 600ms linear;
+    animation-fill-mode: forwards;
+    transition: transform 1s, box-shadow 1s;    
+}
+
+.widget:hover {
+    box-shadow: 14px 10px 97px 0px rgba(179, 179, 179, 0.75);
+    -webkit-box-shadow: 14px 10px 97px 0px rgba(179, 179, 179, 0.75);
+    -moz-box-shadow: 14px 10px 97px 0px rgba(179, 179, 179, 0.75);
+}
+
+.icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 44px;
+    width: 44px;
+    border-radius: 8px;
+}
+
+/* .widget::after,
+.widget::before,
+.icon {
+    background-color: #018A2C;
+} */
+
+.type_container {
+    display: contents;
+}
+
+.quantity,
+.type {
+    font-weight: 600;
+}
+
+.quantity {
+    font-size: 20px;
+}
+
+.type {
+    font-size: 15px;
+    /* color: #a1f990; */
+}
+
+.widget::after {
+    content: "";
+    position: absolute;
+    width: 210px;
+    height: 210px;
+    border-radius: 50%;
+    top: -105px;
+    right: -140px;
+    animation: circleAnim 4s 250ms infinite linear alternate;
+}
+
+.widget::before {
+    content: "";
+    position: absolute;
+    width: 210px;
+    height: 210px;
+    border-radius: 50%;
+    opacity: 0.5;
+    top: -155px;
+    right: -70px;
+    animation: circleAnim 4s 500ms infinite linear alternate;
+}
+
+@keyframes circleAnim {
+    50% {
+        transform: translateY(100px);
+    }
+
+
+    100% {
+        transform: translateY(200px);
+    }
+}
+
+.widget:hover .icon svg {
+    animation: iconHoverAnim 2s 500ms infinite linear alternate;
+}
+
+
+@keyframes iconHoverAnim {
+    100% {
+        transform: rotateY(360deg);
+    }
+}
+
+@media (width >=768px) {    
+    .widget::before {
+        top: -125px;
+        right: -15px;
+    }
+
+    .widget::after {
+        top: -85px;
+        right: -95px;
+    }
+}

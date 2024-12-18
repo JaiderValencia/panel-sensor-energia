@@ -1,0 +1,24 @@
+.widgetsTemplate {
+    margin: 7rem auto auto auto;
+    font-weight: 500;
+    font-size: 2.125rem;
+    height: fit-content;
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    gap: 60px;
+    justify-items: center;
+    width: 80vw;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+@media (width >=768px) {
+    .widgetsTemplate {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+    }
+}
