@@ -12,7 +12,7 @@ function WidgetsTemplate() {
                 <path fill="currentColor" d="M12 2L1 21h22M12 6l7.5 13h-15m9.5-5h-1.5l1.5-3h-4v4h1v3l3-4Z"></path>
             </svg>),
             typeText: 'VOLTAJE',
-            quantity: lastRecord?.voltage || 'Sin valor',
+            quantity: lastRecord?.voltage,
             type: 'green'
         },
         {
@@ -23,7 +23,7 @@ function WidgetsTemplate() {
                 </path>
             </svg>),
             typeText: 'CORRIENTE',
-            quantity: lastRecord?.current || 'Sin valor',
+            quantity: lastRecord?.current,
             type: 'yellow'
         },
         {
@@ -33,7 +33,7 @@ function WidgetsTemplate() {
                 </path>
             </svg>),
             typeText: 'POTENCIA',
-            quantity: lastRecord?.power || 'Sin valor',
+            quantity: lastRecord?.power,
             type: 'yellow'
         },
         {
@@ -43,7 +43,7 @@ function WidgetsTemplate() {
                 </path>
             </svg>),
             typeText: 'KWH',
-            quantity: lastRecord?.kwh || 'Sin valor',
+            quantity: lastRecord?.kwh,
             type: 'blue'
         },
     ]
@@ -60,6 +60,8 @@ function WidgetsTemplate() {
     }
 
     useEffect(() => {
+        getLastRecord()
+
         setInterval(() => {
             getLastRecord()
         }, 10000)

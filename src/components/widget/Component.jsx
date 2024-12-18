@@ -37,7 +37,7 @@ function Widget({ icon, quantity, typeText, color }) {
                 {icon}
             </div>
             <div className={styles.type_container}>
-                <span className={styles.quantity}>{quantity}</span>
+                <span className={styles.quantity}>{quantity || 'Sin valor'}</span>
                 <span className={styles.type}>{typeText}</span>
             </div>
         </div>
