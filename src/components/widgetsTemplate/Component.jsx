@@ -56,9 +56,6 @@ function WidgetsTemplate() {
             lastRecord.kwh = (lastRecord.power / 1000).toFixed(3)
         }
 
-        console.log(lastRecord)
-
-
         setLastRecord(lastRecord)
     }
 
