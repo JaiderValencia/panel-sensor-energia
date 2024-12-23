@@ -1,6 +1,8 @@
 import SectionCard from "../components/SectionCard/Component"
 import Navbar from '../components/Navbar/Component'
 import WidgetTemplate from '../components/widgetsTemplate/Component'
+import { startDriver } from '../utils/driver'
+import { useEffect } from 'react'
 
 function HomePage() {
     const sections = [
@@ -17,6 +19,8 @@ function HomePage() {
             inputType: 'date'
         },
     ]
+
+    useEffect(() => { startDriver() }, [])
 
     return (
         <>
