@@ -1,11 +1,11 @@
-import Cookies from "js-cookie"
 import { useAuth } from '../../context/Auth/createProvider'
 import { Link } from "react-router-dom"
+import { logoutRequest } from '../../api/auth'
 function Navbar() {
     const { setIsLogin, setUserData, userData } = useAuth()
 
-    const deleteCookieHandle = () => {
-        Cookies.remove('Token')
+    const deleteCookieHandle = async () => {        
+        await logoutRequest()
         setIsLogin(false)
         setUserData({})
     }

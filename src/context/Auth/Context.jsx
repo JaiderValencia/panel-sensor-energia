@@ -10,14 +10,14 @@ export function Context({ children }) {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
-        if (!Cookies.get('Token')) {
+        if (!Cookies.get('hasCookie')) {
             setLoading(false)
             return setIsLogin(false)
         }
 
         (async () => {
             try {
-                const response = await validateRequest(Cookies.get('Token'))
+                const response = await validateRequest()
 
                 if (!response.data) return setIsLogin(false)
 
