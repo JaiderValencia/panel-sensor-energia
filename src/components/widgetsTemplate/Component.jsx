@@ -60,11 +60,20 @@ function WidgetsTemplate() {
     }
 
     useEffect(() => {
-        getLastRecord()
+        let isMounted = true
 
-        setInterval(() => {
-            getLastRecord()
-        }, 10000)
+        const poll = async () => {
+            await getLastRecord()
+            if (isMounted) {
+                setTimeout(poll, 1000)
+            }
+        }
+
+        poll()
+
+        return () => {
+            isMounted = false
+        }
     }, [])
 
     return (
